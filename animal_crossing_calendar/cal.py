@@ -1,5 +1,5 @@
 import icalendar
-from .models import Game, Region
+from .models import Game, Region, Language
 from .events import Event
 
 
@@ -15,14 +15,15 @@ GAMES_AND_REGIONS = {
 class Calendar:
     """Top-level Calendar class"""
 
-    def __init__(self, *, game: Game, region: Region):
+    def __init__(self, *, game: Game, region: Region, language: Language):
         if (game, region) not in GAMES_AND_REGIONS:
             raise ValueError("Game and region combination is not valid")
         self.game = game
         self.region = region
+        self.language = language
 
     def events(self) -> list[Event]:
-        return Event.load(game=self.game, region=self.region)
+        return Event.load(game=self.game, region=self.region, language=self.language)
 
     def to_ics(self) -> icalendar.Calendar:
         ics_cal = icalendar.Calendar()

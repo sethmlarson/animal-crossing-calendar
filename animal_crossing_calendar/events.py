@@ -8,7 +8,7 @@ import typing
 
 import icalendar
 
-from .models import Region, Game
+from .models import Region, Game, Language
 
 DATA_PATH = pathlib.Path(__file__).parent / "data"
 EQUINOX_DATA = list(
@@ -220,14 +220,13 @@ class Never(EventOccurs):
 
 
 class Event:
-    def __init__(self, *, name_regional: str, name_english: str, occurs: EventOccurs):
-        self.name_regional: str = name_regional
-        self.name_english: str = name_english
+    def __init__(self, *, name: str, occurs: EventOccurs):
+        self.name: str = name
         self.occurs: EventOccurs = occurs
 
     def to_ics(self) -> icalendar.Event:
         ics_event = icalendar.Event()
-        ics_event["summary"] = self.name_regional
+        ics_event["summary"] = self.name
         first_occurrence = True
         dts = []
         for year in range(2001, 2031):
@@ -241,7 +240,7 @@ class Event:
         return ics_event
 
     @classmethod
-    def load(cls, *, game: Game, region: Region) -> list["Event"]:
+    def load(cls, *, game: Game, region: Region, language: Language) -> list["Event"]:
         rows = list(DictReader((DATA_PATH / "events.csv").open()))
         events = []
         for row in rows:
@@ -259,17 +258,17 @@ class Event:
             else:
                 name_english = row["Name (JP Translation)"].strip()
                 name_japanese = row["Event"].strip()
-            if region in (Region.NORTH_AMERICA, Region.PAL):
-                name_regional = name_english
+            if language == Language.ENGLISH:
+                name = name_english
             else:
-                assert region == Region.JAPAN
-                name_regional = name_japanese
+                assert language == Language.JAPANESE, language
+                name = name_japanese
 
             # TODO: Remove this once all event
             # Japanese translations are available.
             # Specifically, 'Mushrooming Season'.
-            if name_regional == "-" and name_english != "-":
-                name_regional = name_english
+            if name in ("-", "") and name_english not in ("-", ""):
+                name = name_english
 
             # When does the event occur?
             occurs_default = row["Date"]  # AC/AFe+
@@ -287,8 +286,7 @@ class Event:
 
             events.append(
                 Event(
-                    name_regional=name_regional,
-                    name_english=name_english,
+                    name=name,
                     occurs=occurs,
                 )
             )

@@ -12,3 +12,8 @@ class Region(str, enum.Enum):
     NORTH_AMERICA = "NTSC-M"
     JAPAN = "NTSC-J"
     PAL = "PAL"
+
+
+class Language(str, enum.Enum):
+    ENGLISH = "ENG"
+    JAPANESE = "JPN"
