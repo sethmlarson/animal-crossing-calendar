@@ -1,16 +1,53 @@
+import csv
 import re
+import io
 from csv import DictReader
 import datetime
 import pathlib
+import typing
+
+import icalendar
 
 from .models import Region, Game
 
 DATA_PATH = pathlib.Path(__file__).parent / "data"
+EQUINOX_DATA = list(
+    csv.DictReader(io.StringIO((DATA_PATH / "equinoxes.csv").read_text()))
+)
+HARVEST_MOON_DATA = {}
+for _game in Game:
+    HARVEST_MOON_DATA[_game] = list(
+        csv.DictReader(
+            io.StringIO((DATA_PATH / f"harvest-moons-{_game.value}.csv").read_text())
+        )
+    )
+
+
+def equinox_day(year: int, season: str) -> int:
+    assert 2001 <= year <= 2099
+    return int(EQUINOX_DATA[year - 2001][season])
+
+
+def harvest_moon_date(game: Game, year: int) -> tuple[int, int] | tuple[None, None]:
+    harvest_moon_dates = HARVEST_MOON_DATA[game]
+    first_year = int(harvest_moon_dates[0]["Year"])
+    last_year = int(harvest_moon_dates[-1]["Year"])
+    if first_year <= year <= last_year:
+        row = harvest_moon_dates[year - first_year]
+        return int(row["Month"]), int(row["Day"])
+    else:
+        return None, None
 
 
 class EventOccurs:
     def dates_in_year(self, year: int) -> list[datetime.date]:
         raise NotImplementedError()
+
+    def to_ics(self) -> list[tuple[str, typing.Any]]:
+        return [
+            (("dtstart" if i == 0 else "rdate"), dt)
+            for i, dt in enumerate(sorted(self.dates_in_year()))
+        ]
 
 
 class StaticEvent(EventOccurs):
@@ -132,257 +169,25 @@ class LastDayOfEveryMonth(EventOccurs):
 
 
 class SpringEquinox(EventOccurs):
-    SPRING_EQUINOX_DATES = [
-        20,
-        21,
-        21,
-        20,
-        20,
-        21,
-        21,
-        20,
-        20,
-        21,
-        21,
-        20,
-        20,
-        21,
-        21,
-        20,
-        20,
-        21,
-        21,
-        20,
-        20,
-        21,
-        21,
-        20,
-        20,
-        20,
-        21,
-        20,
-        20,
-        20,
-        21,
-        20,
-        20,
-        20,
-        21,
-        20,
-        20,
-        20,
-        21,
-        20,
-        20,
-        20,
-        21,
-        20,
-        20,
-        20,
-        21,
-        20,
-        20,
-        20,
-        21,
-        20,
-        20,
-        20,
-        21,
-        20,
-        20,
-        20,
-        20,
-        20,
-        20,
-        20,
-        20,
-        20,
-        20,
-        20,
-        20,
-        20,
-        20,
-        20,
-        20,
-        20,
-        20,
-        20,
-        20,
-        20,
-        20,
-        20,
-        20,
-        20,
-        20,
-        20,
-        20,
-        20,
-        20,
-        20,
-        20,
-        20,
-        20,
-        20,
-        20,
-        19,
-        20,
-        20,
-        20,
-        19,
-        20,
-        20,
-        20,
-    ]
-
     def dates_in_year(self, year: int) -> list[datetime.date]:
-        day = self.SPRING_EQUINOX_DATES[year - 2001]
+        day = equinox_day(year, "Spring")
         return [datetime.date(year=year, month=3, day=day)]
 
 
 class AutumnEquinox(EventOccurs):
-    AUTUMN_EQUINOX = [
-        23,
-        23,
-        23,
-        23,
-        23,
-        23,
-        23,
-        23,
-        23,
-        23,
-        23,
-        22,
-        23,
-        23,
-        23,
-        22,
-        23,
-        23,
-        23,
-        22,
-        23,
-        23,
-        23,
-        22,
-        23,
-        23,
-        23,
-        22,
-        23,
-        23,
-        23,
-        22,
-        23,
-        23,
-        23,
-        22,
-        23,
-        23,
-        23,
-        22,
-        23,
-        23,
-        23,
-        22,
-        22,
-        23,
-        23,
-        22,
-        22,
-        23,
-        23,
-        22,
-        22,
-        23,
-        23,
-        22,
-        22,
-        23,
-        23,
-        22,
-        22,
-        23,
-        23,
-        22,
-        22,
-        23,
-        23,
-        22,
-        22,
-        23,
-        23,
-        22,
-        22,
-        23,
-        23,
-        22,
-        22,
-        22,
-        23,
-        22,
-        22,
-        22,
-        23,
-        22,
-        22,
-        22,
-        23,
-        22,
-        22,
-        22,
-        23,
-        22,
-        22,
-        22,
-        23,
-        22,
-        22,
-        22,
-        23,
-    ]
-
     def dates_in_year(self, year: int) -> list[datetime.date]:
-        day = self.AUTUMN_EQUINOX[year - 2001]
+        day = equinox_day(year, "Autumn")
         return [datetime.date(year=year, month=9, day=day)]
 
 
 class HarvestMoon(EventOccurs):
-    HARVEST_MOON_DATES = [
-        (10, 2),
-        (9, 21),
-        (9, 10),
-        (9, 28),
-        (9, 18),
-        (10, 7),
-        (9, 26),
-        (9, 15),
-        (10, 4),
-        (9, 23),
-        (9, 12),
-        (9, 30),
-        (9, 19),
-        (9, 9),
-        (9, 28),
-        (9, 16),
-        (10, 5),
-        (9, 25),
-        (9, 14),
-        (10, 1),
-        (9, 20),
-        (9, 10),
-        (9, 29),
-        (9, 18),
-        (10, 7),
-        (9, 26),
-        (9, 15),
-        (10, 3),
-        (9, 22),
-        (9, 11),
-    ]
+    def __init__(self, game: Game):
+        self.game = game
 
     def dates_in_year(self, year: int) -> list[datetime.date]:
-        month, day = self.HARVEST_MOON_DATES[year - 2001]
+        month, day = harvest_moon_date(self.game, year)
+        if month is None:
+            return []
         return [datetime.date(year=year, month=month, day=day)]
 
 
@@ -419,6 +224,21 @@ class Event:
         self.name_regional: str = name_regional
         self.name_english: str = name_english
         self.occurs: EventOccurs = occurs
+
+    def to_ics(self) -> icalendar.Event:
+        ics_event = icalendar.Event()
+        ics_event["summary"] = self.name_regional
+        first_occurrence = True
+        dts = []
+        for year in range(2001, 2031):
+            for dt in self.occurs.dates_in_year(year):
+                dts.append(dt)
+        if not dts:
+            return None
+        ics_event.add("dtstart", dts[0])
+        if len(dts) > 1:
+            ics_event.add("RDATE", dts[1:])
+        return ics_event
 
     @classmethod
     def load(cls, *, game: Game, region: Region) -> list["Event"]:
@@ -457,13 +277,13 @@ class Event:
             occurs_afp = row["Date (AF+)"]
             occurs_af = row["Date (AF)"]
             if region == Region.PAL and occurs_pal != "-":
-                occurs = parse_event_occurs(occurs_pal)
+                occurs = parse_event_occurs(game, occurs_pal)
             elif occurs_afp != "-" and game == Game.ANIMAL_FOREST_PLUS:
-                occurs = parse_event_occurs(occurs_afp)
+                occurs = parse_event_occurs(game, occurs_afp)
             elif occurs_af != "-" and game == Game.ANIMAL_FOREST:
-                occurs = parse_event_occurs(occurs_af)
+                occurs = parse_event_occurs(game, occurs_af)
             else:
-                occurs = parse_event_occurs(occurs_default)
+                occurs = parse_event_occurs(game, occurs_default)
 
             events.append(
                 Event(
@@ -505,7 +325,7 @@ def weekday_to_number(weekday: str) -> int:
     ].index(weekday)
 
 
-def parse_event_occurs(value: str) -> EventOccurs:
+def parse_event_occurs(game: Game, value: str) -> EventOccurs:
     """Parse the Megasheet 'Date' logic into an 'EventOccurs' object"""
     value = value.strip()
     month_pat = r"(January|February|March|April|May|June|July|August|September|October|November|December)"
@@ -573,7 +393,7 @@ def parse_event_occurs(value: str) -> EventOccurs:
     elif "Spring Equinox" in value:
         return SpringEquinox()
     elif "Varies between September" in value:
-        return HarvestMoon()
+        return HarvestMoon(game)
     elif "Autumn Equinox" in value:
         return AutumnEquinox()
     elif value == "Every weekend in Summer":
