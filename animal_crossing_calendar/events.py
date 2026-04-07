@@ -5,6 +5,7 @@ from csv import DictReader
 import datetime
 import pathlib
 import typing
+import hashlib
 
 import icalendar
 
@@ -15,7 +16,12 @@ EQUINOX_DATA = list(
     csv.DictReader(io.StringIO((DATA_PATH / "equinoxes.csv").read_text()))
 )
 HARVEST_MOON_DATA = {}
-for _game in Game:
+for _game in (
+    Game.ANIMAL_FOREST,
+    Game.ANIMAL_FOREST_PLUS,
+    Game.ANIMAL_CROSSING,
+    Game.ANIMAL_FOREST_EPLUS,
+):
     HARVEST_MOON_DATA[_game] = list(
         csv.DictReader(
             io.StringIO((DATA_PATH / f"harvest-moons-{_game.value}.csv").read_text())
@@ -43,24 +49,27 @@ class EventOccurs:
     def dates_in_year(self, year: int) -> list[datetime.date]:
         raise NotImplementedError()
 
-    def to_ics(self) -> list[tuple[str, typing.Any]]:
-        return [
-            (("dtstart" if i == 0 else "rdate"), dt)
-            for i, dt in enumerate(sorted(self.dates_in_year()))
-        ]
-
 
 class StaticEvent(EventOccurs):
     """Event which occurs the same date every year."""
 
-    def __init__(self, month: int, day: int):
-        self._month_day = (month, day)
+    def __init__(
+        self,
+        month: int,
+        day: int,
+    ):
+        self.month = month
+        self.day = day
 
     def __eq__(self, other):
-        return isinstance(other, StaticEvent) and self._month_day == other._month_day
+        return (
+            isinstance(other, StaticEvent)
+            and self.month == other.month
+            and self.day == other.day
+        )
 
     def dates_in_year(self, year: int) -> list[datetime.date]:
-        return [datetime.date(year, *self._month_day)]
+        return [datetime.date(year, self.month, self.day)]
 
 
 class RangeEvent(EventOccurs):
@@ -224,20 +233,22 @@ class Event:
         self.name: str = name
         self.occurs: EventOccurs = occurs
 
-    def to_ics(self) -> icalendar.Event:
-        ics_event = icalendar.Event()
-        ics_event["summary"] = self.name
-        first_occurrence = True
-        dts = []
+    def to_ics(self) -> list[icalendar.Event]:
+        ics_events = []
+        ics_uid = hashlib.md5(self.name.encode()).hexdigest()[:16]
+        is_recurrence = False
         for year in range(2001, 2031):
             for dt in self.occurs.dates_in_year(year):
-                dts.append(dt)
-        if not dts:
-            return None
-        ics_event.add("dtstart", dts[0])
-        if len(dts) > 1:
-            ics_event.add("RDATE", dts[1:])
-        return ics_event
+                ics_event = icalendar.Event()
+                ics_event["SUMMARY"] = self.name
+                ics_event["RECURRENCE-ID" if is_recurrence else "UID"] = ics_uid
+                ics_event["DTSTART"] = dt.strftime("%Y%m%d")
+                ics_event["DTEND"] = (dt + datetime.timedelta(days=1)).strftime(
+                    "%Y%m%d"
+                )
+                is_recurrence = True
+                ics_events.append(ics_event)
+        return ics_events
 
     @classmethod
     def load(cls, *, game: Game, region: Region, language: Language) -> list["Event"]:
@@ -251,13 +262,16 @@ class Event:
             # What is the event's name?
             if Game.ANIMAL_CROSSING in games_in:
                 name_english = row["Event"].strip()
-                if Game.ANIMAL_FOREST_EPLUS == game:
+                name_japanese_afp = row["Name (AF+)"].strip()
+                # Use the AFe+ name unless there's explicitly an AF+ name available.
+                if Game.ANIMAL_FOREST_EPLUS == game or name_japanese_afp in ("", "-"):
                     name_japanese = row["Name (AFe+)"].strip()
                 else:
-                    name_japanese = row["Name (AF+)"].strip()
-            else:
+                    name_japanese = name_japanese_afp
+            else:  # Japanese-exclusive events.
                 name_english = row["Name (JP Translation)"].strip()
                 name_japanese = row["Event"].strip()
+
             if language == Language.ENGLISH:
                 name = name_english
             else:

@@ -27,7 +27,14 @@ class Calendar:
 
     def to_ics(self) -> icalendar.Calendar:
         ics_cal = icalendar.Calendar()
+        ics_cal["PRODID"] = "-//Seth Larson//Animal Crossing Calendar//EN"
+        ics_cal["VERSION"] = "2.0"
+        ics_cal["CALSCALE"] = "GREGORIAN"
+        ics_cal["X-WR-CALNAME"] = (
+            f"{self.game.display_name(self.language)} ({self.region.value})"
+        )
+
         for event in self.events():
-            if ics_component := event.to_ics():
-                ics_cal.add_component(ics_component)
+            for ics_event in event.to_ics():
+                ics_cal.add_component(ics_event)
         return ics_cal

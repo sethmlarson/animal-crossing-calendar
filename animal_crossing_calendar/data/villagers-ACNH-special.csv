@@ -1,0 +1,75 @@
+Name,Icon Image,Photo Image,Gender,Gender (Asia),Hobby,Birthday,Umbrella,Umbrella (HHP),Name Color,Bubble Color,Version Added,Icon Filename,Photo Filename,NPC ID,Internal ID,Unique Entry ID
+Blanca,,,Female,Male,Fashion,2/8,NA,two-tone umbrella,#fe8885,#ffffff,NA,mka,NpcSpMka,mka,44,Ndgae4bSokoBtb97u
+Blathers,,,Male,Male,Education,9/24,camo umbrella,NA,#f7f0c2,#7d593c,1.0.0,owl,NpcSpOwl,owl,23,LXqTqy94M9Yt7yaAb
+Booker,,,Male,Male,Play,4/23,NA,vinyl umbrella,#fffce9,#de9230,NA,dgb,NpcSpDgb,dgb,32,ucw3urkmPQzYh6s9i
+Brewster,,,Male,Male,Education,10/15,bat umbrella,NA,#3c3f3c,#73aa8d,2.0.0,pge,NpcSpPge,pge,28,RkbTSEruyBcEyMjDX
+Brewster,NA,NA,Male,Male,Education,10/15,NA,bat umbrella,#3c3f3c,#73aa8d,3.0.0,NA,NA,pgeB,73,enmnJ3QchD9qgbkPr
+C.J.,,,Male,Male,Fitness,3/7,NA,fish umbrella,#f9db2f,#a99d6e,1.0.0,bey,NpcSpBey,bey,59,ztkxCvQbcCJYQEgJ7
+Celeste,,,Female,Female,Education,9/7,NA,candy umbrella,#f7f0c2,#81280a,1.0.0,ows,NpcSpOws,ows,24,7t6ZNPqsvE22CsyMw
+Chip,,,Male,Male,Nature,12/9,NA,fish umbrella,#fffce9,#8c765e,NA,bev,NpcSpBev,bev,2,XGGxy4Wx86EDDH57S
+Copper,,,Male,Male,Fitness,6/28,NA,vinyl umbrella,#fffce9,#e68711,NA,dga,NpcSpDga,dga,30,jdNK4NrvZmRC82yJ5
+Cornimer,,NA,Male,Male,Nature,12/31,NA,paper parasol,#fad274,#9a5d41,2.0.0,ttlB,NA,ttlB,54,pSZKPuEBzgvS4pEAj
+Cyrus,,,Male,Male,Fitness,1/26,NA,spider umbrella,#fffce9,#4ddcd9,1.2.0,alp,NpcSpAlp,alp,0,yJQuzNGtgcSbWw47g
+Daisy Mae,,,Female,Female,Play,3/30,NA,NA,#ab2629,#ff9b43,1.0.0,boc,NpcSpBoc,boc,61,cGKq9qsGALbSyfgbR
+Digby,,,Male,Male,Fitness,12/20,NA,blue umbrella,#7a4037,#cfb194,NA,szo,NpcSpSzo,szo,49,8Mwo7kmFeM9iRxXmb
+DJ KK,,,Male,Male,Music,8/23,NA,striped umbrella,#595757,#ffffff,2.0.0,tkkB,NpcSpTkkB,tkkB,65,eQgLgRTaBTQy6LQLS
+Don,,,Male,Male,Nature,5/1,NA,camo umbrella,#612f0a,#eb7c41,NA,mob,NpcSpMob,mob,20,pE6as787paJEWhgbX
+Flick,,,Male,Male,Fashion,5/10,NA,spider umbrella,#fb646b,#25251a,1.0.0,chy,NpcSpChy,chy,63,iN2YPaidM5d8aCFpa
+Franklin,,,Male,Male,Nature,10/10,NA,maple-leaf umbrella,#6b63da,#ff97ca,1.6.0,tuk,NpcSpTuk,tuk,40,dFbRDi2FGNmHZvuRM
+Gracie,,,Female,Male,Fashion,11/14,NA,rainbow umbrella,#c141a3,#f5f6a4,NA,grf,NpcSpGrf,grf,10,chZz2xBGZBy2g9L8e
+Grams,,,Female,Female,Education,4/15,NA,pineapple umbrella,#fff37c,#82b26c,NA,kpg,NpcSpKpg,kpg,14,6Cj4smgBhJ7moa4JN
+Grams,,NA,Female,Female,Education,4/15,hotel umbrella,pineapple umbrella,#fff37c,#82b26c,3.0.0,kpgB,NA,kpgB,81,vdsivKZESeCpet6qB
+Gullivarrr,,NA,Male,Male,Play,5/25,NA,beach umbrella,#fffbe8,#f52c2c,1.3.0,gulB,NA,gulB,69,Qy6ZZFjpN2BNWP4gB
+Gulliver,,,Male,Male,Play,5/25,NA,beach umbrella,#fffce9,#0073ff,1.0.0,gul,NpcSpGul,gul,35,uf2Phk2T4fnoaqY2A
+Harriet,,,Female,Female,Fashion,1/31,NA,gelato umbrella,#ffe4d6,#fc81d9,2.0.0,poo,NpcSpPoo,poo,33,bRAwDjRF3s5EifuXo
+Harriet,,NA,Female,Female,Fashion,1/31,NA,gelato umbrella,#ffe4d6,#fc81d9,3.0.0,pooB,NA,pooB,74,S42YTZab35Qye2DK4
+Harvey,,,Male,Male,Nature,8/2,NA,lemon umbrella,#714f31,#ebc83c,1.0.0,spn,NpcSpSpn,spn,58,XHGYT3WfbiboMAQHE
+Isabelle,,,Female,Female,Nature,12/20,melon umbrella,NA,#f4aa16,#fff98f,1.0.0,sza,NpcSpSza,sza,38,ZgSyBa8uRm7uupcQw
+Jack,,,Male,Male,Play,10/31,NA,NA,#080800,#ff6d00,1.5.0,pkn,NpcSpPkn,pkn,57,v8rBscHZN8BuL6vho
+Jingle,,,Male,Male,Fashion,12/24,NA,tartan-check umbrella,#fffe69,#e21212,1.6.0,rei,NpcSpRei,rei,48,nnnCFTFp2CxKM8Kps
+Joan,,,Female,Female,Education,1/8,NA,paper parasol,#ffdb50,#a8562d,NA,boa,NpcSpBoa,boa,4,g489RXNAdbSB7Jdtf
+K.K.,,,Male,Male,Music,8/23,NA,vinyl umbrella,#595757,#ffffff,1.0.0,tkkA,NpcSpTkkA,tkkA,8,8kgdqqyBHHe7Cq8jm
+Kapp'n,,,Male,Male,Fitness,7/12,NA,beach umbrella,#fff37c,#4bb148,2.0.0,kpp,NpcSpKpp,kpp,16,AKDnsnCJwk4Yj96ZR
+Kapp'n,,NA,Male,Male,Fitness,7/12,NA,beach umbrella,#fff37c,#4bb148,3.0.0,kppB,NA,kppB,83,CZnLCciLySeW3jKvx
+Katie,,,Female,Female,Play,10/22,NA,apple umbrella,#9c4e00,#ffe932,NA,lom,NpcSpLom,lom,46,froBkd4rfuHvsgNuB
+Katrina,,,Female,Female,Play,10/28,NA,purple chic umbrella,#fffcf0,#2f4c85,2.0.0,bpt,NpcSpBpt,bpt,5,He3BpCnsFZo9yjTZc
+Kicks,,,Male,Male,Nature,11/30,NA,logo umbrella,#78b3c7,#2a4869,1.0.0,skk,NpcSpSkk,skk,37,qmGXCtGtjukpiS8Fs
+Label,,,Female,Female,Fashion,10/31,lacy parasol,NA,#fffee0,#7f5174,1.0.0,hgc,NpcSpHgc,hgc,11,ueB44Z45DNkoQSZnL
+Leif,,,Male,Male,Nature,8/8,NA,petal parasol,#fffce9,#c0ab72,1.2.0,slo,NpcSpSlo,slo,43,sK5zwmKLL8HNKZhYt
+Leila,,,Female,Female,Fitness,8/16,NA,bear umbrella,#fff37c,#8bd344,NA,kps,NpcSpKps,kps,17,MkkTcwbmJmGXnGA6P
+Leila,,NA,Female,Female,Fitness,8/16,NA,bear umbrella,#fff37c,#8bd344,3.0.0,kpsB,NA,kpsB,84,SkdhyGftaYXXLmDwx
+Leilani,,,Female,Female,Fitness,9/26,NA,exquisite parasol,#fff37c,#76c23b,NA,kpm,NpcSpKpm,kpm,15,D9fj5XxQmDR7ABnws
+Leilani,,NA,Female,Female,Fitness,9/26,NA,exquisite parasol,#fff37c,#76c23b,3.0.0,kpmB,NA,kpmB,82,hKW9ttsfcYac9iHje
+Lottie,,,Female,Female,Fashion,9/12,NA,Paradise Planning umbrella,#7a4412,#ffa6aa,2.0.0,otg,NpcSpOtg,otg,56,Z2YMj6fmLnowD4XnN
+Lottie,NA,NA,Female,Female,Fashion,0/0,NA,Paradise Planning umbrella,#7a4412,#ffa6aa,3.0.0,NA,NA,otgB,71,7xsvyLFW2m8cWS4Nm
+Luna,,,Female,Female,Education,2/29,black lace umbrella,NA,#ffceff,#bc40a9,1.4.0,tap,NpcSpTap,tap,45,mTzz444C5LkcH4W9T
+Lyle,,,Male,Male,Fashion,6/6,NA,patterned vinyl umbrella,#fffad4,#5073a1,NA,ott,NpcSpOtt,ott,22,R6sNbgmgSCgpyFYRf
+Mabel,,,Female,Female,Fashion,5/22,mint umbrella,NA,#fffad4,#3c4c78,1.0.0,hgh,NpcSpHgh,hgh,12,swWzSCwrBNYkgTEWK
+Nat,,,Male,Male,Nature,7/25,NA,mush umbrella,#eded55,#61b513,NA,chm,NpcSpChm,chm,6,KvScWdYZwL2e7kGNn
+Niko,,,Male,Male,Music,1/11,NA,Paradise Planning umbrella,#646464,#fafaf0,2.0.0,mnc,NpcSpMnc,mnc,68,f2KPY2PxQiHX3ySo4
+Orville,,,Male,Male,Fitness,10/2,NA,DAL umbrella,#38889e,#ffdf50,1.0.0,dod,NpcSpDod,dod,62,9ifp3YpYMgGyei58b
+Pascal,,,Male,Male,Music,7/19,NA,NA,#fffd87,#f44957,1.3.0,seo,NpcSpSeo,seo,36,MgTEFSvyfd2mQFefo
+Pavé,,,Male,Male,Music,3/3,NA,rainbow umbrella,#edebd6,#07bbc2,1.7.0,pck,NpcSpPck,pck,25,ddz6FRgy2kCp2TF6A
+Pelly,,,Female,Female,Fashion,3/19,NA,pink shiny-bows parasol,#fffce9,#fe9ee0,NA,plk,NpcSpPlk,plk,26,ydQXw58arpJoRxsao
+Pete,,,Male,Male,Music,3/8,NA,raindrop umbrella,#fffce9,#44c04f,NA,plo,NpcSpPlo,plo,31,iptnwW8oAu3bE5E3L
+Phineas,,,Male,Male,Play,6/20,NA,camo umbrella,#feffca,#d38856,NA,fsl,NpcSpFsl,fsl,3,AQJEzmjGKShfyCyqX
+Phyllis,,,Female,Female,Music,11/21,NA,black lace umbrella,#fffce9,#ea78ff,NA,plm,NpcSpPlm,plm,27,9WgCsffJgLsDTcs5Y
+Porter,,,Male,Male,Music,4/17,NA,red umbrella,#ffeb6f,#4a6bdb,NA,mnk,NpcSpMnk,mnk,19,XhqSyrq7fjmcNe5N3
+Redd,,,Male,Male,Education,10/18,busted umbrella,NA,#4f1904,#ebb020,1.2.0,fox,NpcSpFox,fox,9,iRkXJeZqaWApHk92x
+Reese,,,Female,Female,Fitness,7/5,NA,blue shiny-bows parasol,#fffce9,#ffaad1,1.2.0,alw,NpcSpAlw,alw,1,MKLPGvYfpDwWCEWQ7
+Resetti,,,Male,Male,Education,4/6,NA,camo umbrella,#612f0a,#eb7c41,NA,mol,NpcSpMol,mol,21,BMtksEYHbtBLC6aww
+Rover,,,Male,Male,Music,2/1,NA,orange umbrella,#fffce9,#5a66d2,1.2.0,xct,NpcSpXct,xct,42,riMH36iDWKc3gQAkT
+Sable,,,Female,Female,Education,11/22,picnic umbrella,NA,#fffee0,#895452,1.0.0,hgs,NpcSpHgs,hgs,13,WQnJq8BHMee2XKQ2i
+Saharah,,,Female,Male,Fashion,11/10,NA,NA,#954f07,#fcbb3a,1.0.0,cml,NpcSpCml,cml,7,x753Z7JdmLFZRCwGr
+Saharah,NA,NA,Female,Male,Fashion,11/10,NA,green chic umbrella,#954f07,#fcbb3a,3.0.0,NA,NA,cmlB,72,JwobQ4qgtkxv4y6hJ
+Shrunk,,,Male,Male,Music,1/2,NA,kabuki umbrella,#b5362b,#ffaca9,NA,upa,NpcSpUpa,upa,41,qvhSuN7wnc75GysSb
+Timmy,,,Male,Male,Music,6/7,leaf umbrella,NA,#4d2a20,#de8735,1.0.0,rcm,NpcSpRcm,rcm,52,XQGqJDnh2hRg4unt3
+Tom Nook,,,Male,Male,Education,5/30,Nook Inc. umbrella,NA,#4d2a20,#de8735,1.0.0,rco,NpcSpRco,rco,34,QNw2aQsR5dmgXCrhY
+Tommy,,,Male,Male,Play,6/7,leaf umbrella,NA,#4d2a20,#de8735,1.0.0,rct,NpcSpRct,rct,51,uCvDxaDCp8FnAnmce
+Tortimer,,,Male,Male,Nature,12/31,NA,paper parasol,#705800,#e8e56a,2.0.0,ttlA,NpcSpTtlA,ttlA,39,BPPkKQ5BYRSZhk6Bc
+Wardell,,,Male,Male,Music,2/7,NA,NA,#664c61,#b3daf6,2.0.0,man,NpcSpMan,man,67,dWPNFAFQLTh6BBuBa
+Wendell,,,Male,Male,Play,2/25,NA,pear umbrella,#fffce9,#8c99fd,NA,wrl,NpcSpWrl,wrl,50,LZAjSZiZWt9QQsE3n
+Wilbur,,,Male,Male,Education,7/4,DAL umbrella,NA,#38889e,#ffdf50,1.0.0,doc,NpcSpDoc,doc,66,ShygyMGDR4dAFDXN6
+Wisp,,NA,Male,Male,Play,2/26,NA,NA,#7490c2,#e3ecf5,1.0.0,gstA,NA,gstA,55,SnDQ7nvg5wHmjY6Fg
+Wisp,NA,NA,Male,Male,Play,2/26,NA,NA,#8b84be,#e8e3f5,1.0.0,NA,NA,gstB,64,tJZGzhrXiu2Ft7Fj7
+Zipper,,,Male,Male,Play,3/11,NA,NA,#0ea8c7,#ffe20b,1.1.0,pyn,NpcSpPyn,pyn,47,MxHc7P8664FtCcd2y

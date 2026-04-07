@@ -2,7 +2,6 @@
 
 Calendar of holidays and villager birthdays for Dōbutsu no Mori,
 Dōbutsu no Mori+, Animal Crossing, and Dōbutsu no Mori e+
-
 Data sourced from the “[Data Megasheet for Animal Crossing (N64, GCN)](https://nookipedia.com/wiki/Community:ACGC_Spreadsheet)”
 and the “[Animal Crossing Decompilation project](https://github.com/ACreTeam/ac-decomp/)”.
 
