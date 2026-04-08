@@ -30,7 +30,7 @@ for _game in (
 
 
 def equinox_day(year: int, season: str) -> int:
-    assert 2001 <= year <= 2099
+    assert 2000 <= year <= 2099
     return int(EQUINOX_DATA[year - 2001][season])
 
 
@@ -43,6 +43,11 @@ def harvest_moon_date(game: Game, year: int) -> tuple[int, int] | tuple[None, No
         return int(row["Month"]), int(row["Day"])
     else:
         return None, None
+
+
+def start_end_years(game: Game) -> tuple[int, int]:
+    years = [int(row["Year"]) for row in HARVEST_MOON_DATA[game]]
+    return min(years), max(years)
 
 
 class EventOccurs:
@@ -229,15 +234,17 @@ class Never(EventOccurs):
 
 
 class Event:
-    def __init__(self, *, name: str, occurs: EventOccurs):
+    def __init__(self, *, name: str, occurs: EventOccurs, game: Game):
         self.name: str = name
         self.occurs: EventOccurs = occurs
+        self.game = game
 
     def to_ics(self) -> list[icalendar.Event]:
         ics_events = []
         ics_uid = hashlib.md5(self.name.encode()).hexdigest()[:16]
         is_recurrence = False
-        for year in range(2001, 2031):
+        start_year, end_year = start_end_years(self.game)
+        for year in range(start_year, end_year + 1):
             for dt in self.occurs.dates_in_year(year):
                 ics_event = icalendar.Event()
                 ics_event["SUMMARY"] = self.name
@@ -302,6 +309,7 @@ class Event:
                 Event(
                     name=name,
                     occurs=occurs,
+                    game=game,
                 )
             )
 

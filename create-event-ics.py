@@ -4,7 +4,7 @@ import animal_crossing_calendar as ac
 
 for game, region in ac.GAMES_AND_REGIONS:
     languages = [ac.Language.ENGLISH]
-    if region == ac.Region.JAPAN:
+    if region == ac.Region.NTSC_J:
         languages.append(ac.Language.JAPANESE)
     for language in languages:
         cal = ac.Calendar(

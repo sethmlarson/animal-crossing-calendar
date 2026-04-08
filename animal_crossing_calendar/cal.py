@@ -4,11 +4,11 @@ from .events import Event
 
 
 GAMES_AND_REGIONS = {
-    (Game.ANIMAL_FOREST, Region.JAPAN),
-    (Game.ANIMAL_FOREST_PLUS, Region.JAPAN),
-    (Game.ANIMAL_CROSSING, Region.NORTH_AMERICA),
+    (Game.ANIMAL_FOREST, Region.NTSC_J),
+    (Game.ANIMAL_FOREST_PLUS, Region.NTSC_J),
+    (Game.ANIMAL_CROSSING, Region.NTSC),
     (Game.ANIMAL_CROSSING, Region.PAL),
-    (Game.ANIMAL_FOREST_EPLUS, Region.JAPAN),
+    (Game.ANIMAL_FOREST_EPLUS, Region.NTSC_J),
 }
 
 

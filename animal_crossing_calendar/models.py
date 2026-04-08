@@ -31,8 +31,8 @@ class Game(str, enum.Enum):
 
 
 class Region(str, enum.Enum):
-    NORTH_AMERICA = "NTSC"
-    JAPAN = "NTSC-J"
+    NTSC = "NTSC"
+    NTSC_J = "NTSC-J"
     PAL = "PAL"
 
 

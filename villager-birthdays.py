@@ -4,7 +4,7 @@ from animal_crossing_calendar import Game
 villagers = {}
 
 for game in ac.Game:
-    for name, villager in sorted(ac.VILLAGERS[game].items()):
+    for villager in ac.Villager.for_game(game):
         villagers.setdefault(villager.name_future or villager.name, set()).add(
             game.value
         )
@@ -29,7 +29,7 @@ games_without_birthdays = [
 villager_birthdays = {}
 
 for game in games_with_birthdays:
-    for name, villager in sorted(ac.VILLAGERS[game].items()):
+    for villager in ac.Villager.for_game(game):
         key = villager.name_future or villager.name
         birthday = villager.birthday
         if birthday:
@@ -38,7 +38,7 @@ for game in games_with_birthdays:
 villagers_without_birthdays = {}
 villagers_with_birthdays = {}
 for game in games_without_birthdays:
-    for name, villager in sorted(ac.VILLAGERS[game].items()):
+    for villager in ac.Villager.for_game(game):
         key = villager.name_future or villager.name
         if key in villager_birthdays:
             if key not in villagers_with_birthdays:
@@ -61,16 +61,3 @@ for name, star_sign in sorted(villagers_without_birthdays.items()):
     star_signs_unassigned.setdefault(star_sign, 0)
     star_signs_unassigned[star_sign] += 1
 print(star_signs_unassigned)
-
-STAR_SIGN_RANGES = {
-    "Aries": ((3, 21), (4, 20)),
-    "Taurus": ((4, 21), (5, 21)),
-    "Gemini": ((5, 22), (6, 21)),
-    "Cancer": ((6, 22), (7, 23)),
-    "Leo": ((7, 24), (8, 23)),
-    "Virgo": ((8, 24), (9, 23)),
-    "Libra": ((9, 24), (10, 23)),
-    "Scorpio": ((10, 24), (11, 22)),
-    "Sagittarius": ((11, 23), (12, 21)),
-    "Capricorn": ((12, 23), (1, 21)),
-}

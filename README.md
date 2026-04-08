@@ -10,7 +10,7 @@ import animal_crossing_calendar as ac
 
 cal = ac.Calendar(
     game=ac.Game.ANIMAL_FOREST_EPLUS,
-    region=ac.Region.JAPAN,
+    region=ac.Region.NTSC_J,
     language=ac.Language.JAPANESE,
 )
 for event in cal.events():
@@ -23,4 +23,16 @@ for event in cal.events():
 # 春の運動会 2026年03月20日
 # エイプリルフール 2026年04月01日
 # ...
+```
+
+Villager birthdays and star signs are also included using data
+from games that implement birthdays (Wild World and later).
+Villagers from prior games only have star signs available from
+the GBA e-Reader cards.
+
+```python
+import animal_crossing_calendar as ac
+
+for villager in ac.Villager.for_game():
+    villager.
 ```
