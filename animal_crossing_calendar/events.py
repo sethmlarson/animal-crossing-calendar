@@ -264,6 +264,8 @@ class Event:
                     end_dt = datetime.datetime.combine(
                         dt, datetime.time(hour=self.times[1] // 3600)
                     )
+                    if self.times[1] < self.times[0]:
+                        end_dt += datetime.timedelta(days=1)
                     ics_event["DTSTART"] = start_dt.strftime("%Y%m%dT%H%M%S")
                     ics_event["DTEND"] = end_dt.strftime("%Y%m%dT%H%M%S")
                 is_recurrence = True
