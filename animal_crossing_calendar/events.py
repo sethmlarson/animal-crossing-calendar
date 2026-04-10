@@ -234,9 +234,12 @@ class Never(EventOccurs):
 
 
 class Event:
-    def __init__(self, *, name: str, occurs: EventOccurs, game: Game):
+    def __init__(
+        self, *, name: str, occurs: EventOccurs, times: tuple[int, int], game: Game
+    ):
         self.name: str = name
         self.occurs: EventOccurs = occurs
+        self.times = times
         self.game = game
 
     def to_ics(self) -> list[icalendar.Event]:
@@ -249,10 +252,20 @@ class Event:
                 ics_event = icalendar.Event()
                 ics_event["SUMMARY"] = self.name
                 ics_event["RECURRENCE-ID" if is_recurrence else "UID"] = ics_uid
-                ics_event["DTSTART"] = dt.strftime("%Y%m%d")
-                ics_event["DTEND"] = (dt + datetime.timedelta(days=1)).strftime(
-                    "%Y%m%d"
-                )
+                if self.times == (0, 0):
+                    ics_event["DTSTART"] = dt.strftime("%Y%m%d")
+                    ics_event["DTEND"] = (dt + datetime.timedelta(days=1)).strftime(
+                        "%Y%m%d"
+                    )
+                else:
+                    start_dt = datetime.datetime.combine(
+                        dt, datetime.time(hour=self.times[0] // 3600)
+                    )
+                    end_dt = datetime.datetime.combine(
+                        dt, datetime.time(hour=self.times[1] // 3600)
+                    )
+                    ics_event["DTSTART"] = start_dt.strftime("%Y%m%dT%H%M%S")
+                    ics_event["DTEND"] = end_dt.strftime("%Y%m%dT%H%M%S")
                 is_recurrence = True
                 ics_events.append(ics_event)
         return ics_events
@@ -292,23 +305,36 @@ class Event:
                 name = name_english
 
             # When does the event occur?
-            occurs_default = row["Date"]  # AC/AFe+
-            occurs_pal = row["Date (Europe)"]
-            occurs_afp = row["Date (AF+)"]
-            occurs_af = row["Date (AF)"]
-            if region == Region.PAL and occurs_pal != "-":
+            occurs_default = row["Date"].strip()  # AC/AFe+
+            occurs_pal = row["Date (Europe)"].strip()
+            occurs_afp = row["Date (AF+)"].strip()
+            occurs_af = row["Date (AF)"].strip()
+            if region == Region.PAL and occurs_pal not in ("-", ""):
                 occurs = parse_event_occurs(game, occurs_pal)
-            elif occurs_afp != "-" and game == Game.ANIMAL_FOREST_PLUS:
+            elif occurs_afp not in ("-", "") and game == Game.ANIMAL_FOREST_PLUS:
                 occurs = parse_event_occurs(game, occurs_afp)
-            elif occurs_af != "-" and game == Game.ANIMAL_FOREST:
+            elif occurs_af not in ("-", "") and game == Game.ANIMAL_FOREST:
                 occurs = parse_event_occurs(game, occurs_af)
             else:
                 occurs = parse_event_occurs(game, occurs_default)
+
+            start_time = 0
+            end_time = 0
+            mat = re.search(
+                r"([0-9]{,2})(am|pm) - ([0-9]{,2})(am|pm)", row["Time"].strip()
+            )
+            if mat is not None:
+                start_hour, start_ampm, end_hour, end_ampm = mat.groups()
+                start_time = (
+                    int(start_hour) + (12 if start_ampm == "pm" else 0)
+                ) * 3600
+                end_time = (int(end_hour) + (12 if end_ampm == "pm" else 0)) * 3600
 
             events.append(
                 Event(
                     name=name,
                     occurs=occurs,
+                    times=(start_time, end_time),
                     game=game,
                 )
             )
