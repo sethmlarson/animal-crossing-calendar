@@ -268,10 +268,18 @@ class Event:
                     )
                 else:
                     start_dt = datetime.datetime.combine(
-                        dt, datetime.time(hour=self.times[0] // 3600)
+                        dt,
+                        datetime.time(
+                            hour=self.times[0] // 3600,
+                            minute=(self.times[0] % 3600) // 60,
+                        ),
                     )
                     end_dt = datetime.datetime.combine(
-                        dt, datetime.time(hour=self.times[1] // 3600)
+                        dt,
+                        datetime.time(
+                            hour=self.times[1] // 3600,
+                            minute=(self.times[1] % 3600) // 60,
+                        ),
                     )
                     if self.times[1] < self.times[0]:
                         end_dt += datetime.timedelta(days=1)
@@ -332,14 +340,17 @@ class Event:
             start_time = 0
             end_time = 0
             mat = re.search(
-                r"([0-9]{,2})(am|pm) - ([0-9]{,2})(am|pm)", row["Time"].strip()
+                r"([0-9]{,2})(am|pm) - ([0-9]{,2})(?::([0-9]{2}))?(am|pm)",
+                row["Time"].strip(),
             )
             if mat is not None:
-                start_hour, start_ampm, end_hour, end_ampm = mat.groups()
+                start_hour, start_ampm, end_hour, end_minute, end_ampm = mat.groups()
+                end_minute = int(end_minute or 0)
                 start_time = (
                     int(start_hour) + (12 if start_ampm == "pm" else 0)
                 ) * 3600
                 end_time = (int(end_hour) + (12 if end_ampm == "pm" else 0)) * 3600
+                end_time += end_minute * 60
 
             location = row["Location"].strip()
             if location in ("-", ""):
