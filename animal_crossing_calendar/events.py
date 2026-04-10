@@ -235,12 +235,19 @@ class Never(EventOccurs):
 
 class Event:
     def __init__(
-        self, *, name: str, occurs: EventOccurs, times: tuple[int, int], game: Game
+        self,
+        *,
+        name: str,
+        occurs: EventOccurs,
+        times: tuple[int, int],
+        game: Game,
+        location: str | None = None,
     ):
         self.name: str = name
         self.occurs: EventOccurs = occurs
         self.times = times
         self.game = game
+        self.location = location
 
     def to_ics(self) -> list[icalendar.Event]:
         ics_events = []
@@ -252,6 +259,8 @@ class Event:
                 ics_event = icalendar.Event()
                 ics_event["SUMMARY"] = self.name
                 ics_event["RECURRENCE-ID" if is_recurrence else "UID"] = ics_uid
+                if self.location is not None:
+                    ics_event["LOCATION"] = self.location
                 if self.times == (0, 0):
                     ics_event["DTSTART"] = dt.strftime("%Y%m%d")
                     ics_event["DTEND"] = (dt + datetime.timedelta(days=1)).strftime(
@@ -332,11 +341,16 @@ class Event:
                 ) * 3600
                 end_time = (int(end_hour) + (12 if end_ampm == "pm" else 0)) * 3600
 
+            location = row["Location"].strip()
+            if location in ("-", ""):
+                location = None
+
             events.append(
                 Event(
                     name=name,
                     occurs=occurs,
                     times=(start_time, end_time),
+                    location=location,
                     game=game,
                 )
             )
