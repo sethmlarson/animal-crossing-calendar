@@ -37,6 +37,7 @@ def date_to_star_sign(date: tuple[int, int]):
 class Villager:
     name: str
     name_future: str
+    name_slug: str
     star_sign: str | None
     birthday: tuple[int, int] | None
     game: Game
@@ -62,6 +63,11 @@ class Villager:
                 villagers.setdefault(villager.name_future, villager)
         return set(villagers.values())
 
+    def birthday_allow_unofficial(self) -> tuple[int, int] | None:
+        if self.birthday:
+            return self.birthday
+        return _UNOFFICIAL_BIRTHDAYS.get(self.name_future, None)
+
 
 def _load_villagers(game: Game) -> set[Villager]:
     rows = []
@@ -84,6 +90,7 @@ def _load_villagers(game: Game) -> set[Villager]:
     for row in rows:
         name = row["Name"]
         name_future = None
+        name_romanization = None
         star_sign = None
         birthday = None
         for key in row.keys():
@@ -95,6 +102,8 @@ def _load_villagers(game: Game) -> set[Villager]:
                 name_future = row[key].strip()
                 if name_future == "-":
                     name_future = None
+            elif "Name (Romanization)" == key:
+                name_romanization = row[key].strip()
             elif "GBA Constellation" in key:
                 star_sign = star_sign_re.search(row[key]).group(1)
             elif key == "Birthday":
@@ -115,6 +124,7 @@ def _load_villagers(game: Game) -> set[Villager]:
 
         name = name.rstrip(".")
         name_future = name_future.rstrip(".") if name_future else None
+        name_slug = name_future or name_romanization or name
 
         if name_future is None:
             name_future = name
@@ -128,6 +138,7 @@ def _load_villagers(game: Game) -> set[Villager]:
                 game=game,
                 name=name,
                 name_future=name_future,
+                name_slug=name_slug,
                 star_sign=star_sign,
                 birthday=birthday,
             )
@@ -138,3 +149,68 @@ def _load_villagers(game: Game) -> set[Villager]:
 for _game in Game:
     for villager in _load_villagers(_game):
         _VILLAGERS.setdefault(_game, {})[villager.name] = villager
+
+_UNOFFICIAL_BIRTHDAYS = {
+    "Hector": (3, 31),
+    "Rhoda": (4, 19),
+    "Woolio": (4, 14),
+    "ゲン": (4, 10),
+    "ポコ": (4, 5),
+    "メグミ": (3, 24),
+    "Bessie": (5, 11),
+    "Chuck": (5, 1),
+    "Oxford": (4, 21),
+    "Petunia": (4, 26),
+    "Betty": (5, 28),
+    "Cupcake": (6, 12),
+    "Flash": (6, 20),
+    "キャロット": (6, 7),
+    "タロウ": (5, 30),
+    "Belle": (6, 22),
+    "Elina": (7, 6),
+    "Emerald": (7, 16),
+    "Marcy": (6, 25),
+    "Penny": (7, 10),
+    "シナビル": (7, 18),
+    "ジョー": (6, 23),
+    "Pigleg": (7, 29),
+    "Rollo": (8, 15),
+    "Twirp": (8, 5),
+    "バウ": (7, 23),
+    "Hambo": (9, 2),
+    "Liz": (8, 23),
+    "Quetzal": (8, 25),
+    "パトリシア": (9, 21),
+    "ミャウ": (9, 13),
+    "Flossie": (9, 29),
+    "Hank": (9, 23),
+    "Sue E": (10, 18),
+    "こはる": (10, 2),
+    "キット": (9, 27),
+    "Tiara": (11, 11),
+    "マダムローザ": (11, 10),
+    "Jane": (12, 21),
+    "Leigh": (12, 20),
+    "Lulu": (12, 12),
+    "Valise": (11, 24),
+    "Yodel": (12, 11),
+    "サニー": (12, 15),
+    "ジュウベエ": (12, 6),
+    "ピエール": (11, 23),
+    "フルーティー": (11, 27),
+    "Chico": (1, 4),
+    "Iggy": (12, 26),
+    "Otis": (1, 10),
+    "Sven": (12, 31),
+    "しょうきち": (12, 22),
+    "アイル": (1, 18),
+    "Nosegay": (2, 2),
+    "アナログ": (2, 12),
+    "ウェルダン": (2, 14),
+    "Aziz": (2, 29),
+    "Dozer": (3, 15),
+    "Huggy": (3, 13),
+    "クララ": (3, 19),
+    "マサ": (2, 25),
+    "ルル": (3, 18),
+}
