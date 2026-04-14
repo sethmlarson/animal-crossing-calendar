@@ -339,9 +339,10 @@ class Event:
 
             start_time = 0
             end_time = 0
+            row_time = row["Time"].strip().lower()
             mat = re.search(
                 r"([0-9]{,2})(am|pm) - ([0-9]{,2})(?::([0-9]{2}))?(am|pm)",
-                row["Time"].strip(),
+                row_time,
             )
             if mat is not None:
                 start_hour, start_ampm, end_hour, end_minute, end_ampm = mat.groups()
@@ -351,6 +352,9 @@ class Event:
                 ) * 3600
                 end_time = (int(end_hour) + (12 if end_ampm == "pm" else 0)) * 3600
                 end_time += end_minute * 60
+            elif "tom nook" in row_time and "shop" in row_time:
+                start_time = 3600 * 9
+                end_time = 3600 * 22
 
             location = row["Location"].strip()
             if location in ("-", ""):
@@ -471,5 +475,12 @@ def parse_event_occurs(game: Game, value: str) -> EventOccurs:
         return AutumnEquinox()
     elif value == "Every weekend in Summer":
         return TentCamperSaturdays()
+    elif "Day after Harvest Festival" in value:
+        # Harvest Festival is 4th Thursday in November.
+        return DayAfterNthWeekdayOfMonth(
+            month=11,
+            weekday=weekday_to_number("Thursday"),
+            nth_weekday=4,
+        )
     else:
         return Never()
