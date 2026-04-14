@@ -253,6 +253,9 @@ class Event:
         ics_events = []
         ics_uid = hashlib.md5(self.name.encode()).hexdigest()[:16]
         is_recurrence = False
+        is_tent_campers = self.name in ("Tent Campers", "キャンプ")
+        if is_tent_campers:
+            self.times = (9 * 3600, 15 * 3600)  # Note: 3PM the next day.
         start_year, end_year = start_end_years(self.game)
         for year in range(start_year, end_year + 1):
             for dt in self.occurs.dates_in_year(year):
@@ -281,7 +284,7 @@ class Event:
                             minute=(self.times[1] % 3600) // 60,
                         ),
                     )
-                    if self.times[1] < self.times[0]:
+                    if self.times[1] < self.times[0] or is_tent_campers:
                         end_dt += datetime.timedelta(days=1)
                     ics_event["DTSTART"] = start_dt.strftime("%Y%m%dT%H%M%S")
                     ics_event["DTEND"] = end_dt.strftime("%Y%m%dT%H%M%S")
